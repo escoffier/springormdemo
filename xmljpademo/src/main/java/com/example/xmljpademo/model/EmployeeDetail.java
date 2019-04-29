@@ -52,6 +52,9 @@ public class EmployeeDetail implements Serializable {
     @OneToMany(mappedBy = "employee")
     private List<Phone> phones;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
+    private List<DeptEmployee> deptEmployees;
+
     public Long getEmployeeNo() {
         return employeeNo;
     }
@@ -130,5 +133,13 @@ public class EmployeeDetail implements Serializable {
 
     public void setPhones(List<Phone> phones) {
         this.phones = phones;
+    }
+
+    public List<DeptEmployee> getDeptEmployees() {
+        return deptEmployees;
+    }
+
+    public void setDeptEmployees(List<DeptEmployee> deptEmployees) {
+        this.deptEmployees = deptEmployees;
     }
 }

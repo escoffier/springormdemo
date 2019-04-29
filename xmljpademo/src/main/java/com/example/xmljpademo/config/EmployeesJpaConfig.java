@@ -16,30 +16,32 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableJpaRepositories(
-        entityManagerFactoryRef = "EmployeesEntityManager",
-        basePackages = {"com.example.xmljpademo.repository"},
+        entityManagerFactoryRef = "employeesEntityManager",
+        basePackages = {"com.example.xmljpademo.repository.empsrepository"},
         transactionManagerRef = "employeesTransactionManager")
 public class EmployeesJpaConfig {
 
-    @Bean(name = "EmployeesDataSource")
-    @ConfigurationProperties(prefix = "app.employees.datasource")
-    DataSource employeesDataSource() {
-        return DataSourceBuilder.create().build();
-    }
-
-    @Bean(name = "EmployeesEntityManager")
+    @Bean(name = "employeesEntityManager")
     LocalContainerEntityManagerFactoryBean employeesEntityManagerFactory(EntityManagerFactoryBuilder builder) {
         return builder.dataSource(employeesDataSource())
-                .packages(Employee.class, Salary.class, Title.class, EmployeeDetail.class, Phone.class)
+                .packages(Employee.class, Salary.class,
+                          Title.class, EmployeeDetail.class,
+                          Phone.class, DeptEmployee.class)
                 .persistenceUnit("employee")
                 .build();
     }
 
     @Bean(name = "employeesTransactionManager")
-    public JpaTransactionManager transactionManager(@Qualifier("EmployeesEntityManager") EntityManagerFactory serversEntityManager){
+    public JpaTransactionManager transactionManager(@Qualifier("employeesEntityManager") EntityManagerFactory serversEntityManager){
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(serversEntityManager);
 
         return transactionManager;
+    }
+
+    @Bean(name = "employeesDataSource")
+    @ConfigurationProperties(prefix = "app.employees.datasource")
+    DataSource employeesDataSource() {
+        return DataSourceBuilder.create().build();
     }
 }
