@@ -11,9 +11,13 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+
+import static org.springframework.context.annotation.AdviceMode.ASPECTJ;
+import static org.springframework.context.annotation.AdviceMode.PROXY;
 
 //@Configuration
 //@EnableTransactionManagement
@@ -49,6 +53,7 @@ import javax.sql.DataSource;
         entityManagerFactoryRef = "postsEntityManager",
         basePackages = {"com.example.xmljpademo.repository.postsrepository"},
         transactionManagerRef = "postsTransactionManager")
+@EnableTransactionManagement(mode = PROXY)
 public class PostJpaConfig {
 
     @Primary
