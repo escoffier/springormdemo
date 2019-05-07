@@ -23,6 +23,14 @@ public class EmployeeNO implements Serializable {
         this.deptNo = deptNo;
     }
 
+    public void setEmployeeNo(Long employeeNo) {
+        this.employeeNo = employeeNo;
+    }
+
+    public void setDeptNo(String deptNo) {
+        this.deptNo = deptNo;
+    }
+
     public Long getEmployeeNo() {
         return employeeNo;
     }

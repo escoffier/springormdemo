@@ -53,7 +53,8 @@ import static org.springframework.context.annotation.AdviceMode.PROXY;
         entityManagerFactoryRef = "postsEntityManager",
         basePackages = {"com.example.xmljpademo.repository.postsrepository"},
         transactionManagerRef = "postsTransactionManager")
-@EnableTransactionManagement(mode = PROXY)
+//@EnableTransactionManagement(mode = PROXY, proxyTargetClass = true)
+@EnableTransactionManagement(mode = ASPECTJ)
 public class PostJpaConfig {
 
     @Primary

@@ -1,9 +1,8 @@
 package com.example.xmljpademo.service;
 
-import com.example.xmljpademo.model.DeptEmployee;
-import com.example.xmljpademo.model.Employee;
-import com.example.xmljpademo.model.EmployeeDetail;
+import com.example.xmljpademo.model.*;
 import com.example.xmljpademo.repository.empsrepository.DeptEmployeesRepository;
+import com.example.xmljpademo.repository.empsrepository.DeptManagerRepository;
 import com.example.xmljpademo.repository.empsrepository.EmployeeDetailRepository;
 import com.example.xmljpademo.repository.empsrepository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +24,9 @@ public class EmployeeService {
     @Autowired
     DeptEmployeesRepository deptEmployeesRepository;
 
+    @Autowired
+    DeptManagerRepository deptManagerRepository;
+
     public Employee getEmployee(Long id) {
          return repository.findById(id).orElse(new Employee());
     }
@@ -34,4 +36,8 @@ public class EmployeeService {
     }
 
     public DeptEmployee getDeptEmp(Long id) {return  deptEmployeesRepository.findById(id).orElse(new DeptEmployee()); }
+
+    public DeptManager getDeptManager(EmployeeNO id) {
+        return deptManagerRepository.findById(id).orElse(new DeptManager());
+    }
 }

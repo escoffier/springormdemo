@@ -1,8 +1,6 @@
 package com.example.xmljpademo.controller;
 
-import com.example.xmljpademo.model.DeptEmployee;
-import com.example.xmljpademo.model.Employee;
-import com.example.xmljpademo.model.EmployeeDetail;
+import com.example.xmljpademo.model.*;
 import com.example.xmljpademo.model.post.Post;
 import com.example.xmljpademo.service.EmployeeService;
 import com.example.xmljpademo.service.PostsService;
@@ -47,4 +45,9 @@ public class RestAppController {
     @GetMapping("/deptemployee/{id}")
     DeptEmployee getDeptEmployee(@PathVariable("id") Long id) {return employeeService.getDeptEmp(id) ;}
 
+    @GetMapping("/deptManager/{id}")
+    DeptManager getDeptManager(@PathVariable("id") Long id) {
+        DeptManager manager = employeeService.getDeptManager(new EmployeeNO(id, "d001"));
+        return manager;
+    }
 }
