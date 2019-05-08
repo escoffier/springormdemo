@@ -12,8 +12,8 @@ public class Post {
     private Long id;
     private String title;
 
-    @OneToMany
-    @JoinColumn(name = "post_id")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    //@JoinColumn(name = "post_id")
     private List<PostComment> postCommentList;
 
     public Long getId() {

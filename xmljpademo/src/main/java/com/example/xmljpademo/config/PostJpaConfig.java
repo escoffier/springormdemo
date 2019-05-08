@@ -1,6 +1,7 @@
 package com.example.xmljpademo.config;
 
 import com.example.xmljpademo.model.post.Post;
+import com.example.xmljpademo.model.post.PostComment;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -53,15 +54,15 @@ import static org.springframework.context.annotation.AdviceMode.PROXY;
         entityManagerFactoryRef = "postsEntityManager",
         basePackages = {"com.example.xmljpademo.repository.postsrepository"},
         transactionManagerRef = "postsTransactionManager")
-//@EnableTransactionManagement(mode = PROXY, proxyTargetClass = true)
-@EnableTransactionManagement(mode = ASPECTJ)
+@EnableTransactionManagement(mode = PROXY, proxyTargetClass = true)
+//@EnableTransactionManagement(mode = ASPECTJ)
 public class PostJpaConfig {
 
     @Primary
     @Bean(name = "postsEntityManager")
     LocalContainerEntityManagerFactoryBean postsEntityManagerFactory(EntityManagerFactoryBuilder builder) {
         return builder.dataSource(postsDataSource())
-                .packages(Post.class)
+                .packages(Post.class, PostComment.class)
                 .persistenceUnit("posts")
                 .build();
     }

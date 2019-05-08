@@ -14,13 +14,6 @@ public class EmployeeDetail implements Serializable {
 
     private static final long serialVersionUID = 10002L;
 
-//    private int employeeNo;
-//    private LocalDate birthDate;
-//    private String firstName;
-//    private String lastName;
-//    private Gender gender;
-//    private LocalDate hireDate;
-
     @Id
     @Column(name = "emp_no")
     private Long employeeNo;

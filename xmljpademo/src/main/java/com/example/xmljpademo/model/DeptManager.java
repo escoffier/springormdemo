@@ -28,6 +28,9 @@ public class DeptManager implements Serializable {
 
 //    @Column(name = "dept_no")
 //    String deptNo;
+    @ManyToOne
+    @JoinColumn(name = "dept_no", insertable = false, updatable = false)
+    private Department department;
 
     @Column(name = "from_date")
     LocalDate fromDate;
@@ -49,6 +52,14 @@ public class DeptManager implements Serializable {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 
 //    public int getEmployeeNo() {

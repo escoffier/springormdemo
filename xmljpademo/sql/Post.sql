@@ -18,7 +18,7 @@ CREATE TABLE posts (
 
 
 CREATE TABLE postcomments (
-    id         INT              NOT NULL ,
+    id         INT              NOT NULL AUTO_INCREMENT,
     review     VARCHAR(256)     NOT NULL ,
     post_id    INT              NOT NULL ,
     FOREIGN KEY (post_id) REFERENCES posts (id) ON DELETE CASCADE ,
