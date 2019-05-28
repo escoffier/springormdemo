@@ -24,10 +24,25 @@ public class RestAppController {
     @Autowired
     PostsService postsService;
 
+    @GetMapping("/redis")
+    String redis() {
+        return employeeService.saveToRedis();
+    }
+
+    @GetMapping("/emp/{id}")
+    Employee getEmp(@PathVariable("id") Long id) {
+        return employeeService.getEmployeeCached1(id);
+    }
 
     @GetMapping("/employees/{id}")
     Employee getEmployee(@PathVariable("id") Long id) {
         return employeeService.getEmployee(id);
+    }
+
+    @PostMapping("/emp")
+    Employee insertEmp(@RequestBody Employee employee) {
+        return employeeService.inserEmp(employee);
+
     }
 
     @GetMapping("/employeesdetail/{id}")
@@ -40,6 +55,12 @@ public class RestAppController {
         return detail;
     }
 
+    @GetMapping("/empdetail/{id}")
+    EmployeeDetail getEmpDetail(@PathVariable("id") Long id) {
+        EmployeeDetail employeeDetail = employeeService.getEmployeeDetail(id);
+
+        return employeeDetail;
+    }
     @GetMapping("/posts/{id}")
     Post getPost(@PathVariable("id") Long id) {
         return postsService.getPost(id);

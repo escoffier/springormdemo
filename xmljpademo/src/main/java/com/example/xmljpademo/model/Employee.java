@@ -1,5 +1,10 @@
 package com.example.xmljpademo.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -38,10 +43,12 @@ public class Employee implements Serializable {
         this.employeeNo = employeeNo;
     }
 
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     public LocalDate getBirthDate() {
         return birthDate;
     }
 
+    @JsonSerialize(using = LocalDateSerializer.class)
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
@@ -70,10 +77,12 @@ public class Employee implements Serializable {
         this.gender = gender;
     }
 
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     public LocalDate getHireDate() {
         return hireDate;
     }
 
+    @JsonSerialize(using = LocalDateSerializer.class)
     public void setHireDate(LocalDate hireDate) {
         this.hireDate = hireDate;
     }
