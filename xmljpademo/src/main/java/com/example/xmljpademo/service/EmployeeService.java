@@ -46,8 +46,8 @@ public class EmployeeService {
     RedisSevice redisSevice;
 
     //@Scheduled(fixedDelay = 10000)
-    public String saveToRedis() {
-        Executors.newSingleThreadExecutor().execute(() -> redisSevice.start());
+    public String saveToRedis(String mode) {
+        Executors.newSingleThreadExecutor().execute(() -> redisSevice.db2redis(mode));
         return "begin merge data to redis";
     }
     public Employee getEmployeeCached(Long id) {
@@ -99,25 +99,24 @@ public class EmployeeService {
 
     @Transactional(value = "employeesTransactionManager")
     public Employee getEmployee(Long id) {
-//        Optional<Employee> em = employeeRepository.findById(id);
-//        em.ifPresent(employee -> redisSevice.saveEmployee(employee));
-//        return em.orElse(new Employee());
-        // return employeeRepository.findById(id).orElse(new Employee());
         String key = "em:" + id;
         Optional<Employee> emp = redisSevice.getEmployee1(key);
         return emp.orElseGet(()->{
-            return  employeeRepository.findById(id).orElse(new Employee());
+            Optional<Employee> employee = employeeRepository.findById(id);
+            employee.ifPresent(employee1 -> redisSevice.saveEmployee(employee1));
+            return employee.get();
+            //return  employeeRepository.findById(id).orElse(new Employee());
         });
     }
 
     @Transactional(value = "employeesTransactionManager", propagation = Propagation.REQUIRED)
     public EmployeeDetail getEmployeeDetail(Long id) {
         Employee employee = employeeRepository.findById(id).orElseThrow(() -> new RuntimeException("employee"));
-        List<Salary> salares = getSalaries(id);
+        List<Salary> salaries = getSalaries(id);
         List<Phone> phones = getPhones(id);
 
         EmployeeDetail employeeDetail = new EmployeeDetail();
-        employeeDetail.setSalaries(salares);
+        employeeDetail.setSalaries(salaries);
         employeeDetail.setPhones(phones);
         return employeeDetail;
     }

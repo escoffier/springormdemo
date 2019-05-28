@@ -25,8 +25,17 @@ public class RestAppController {
     PostsService postsService;
 
     @GetMapping("/redis")
-    String redis() {
-        return employeeService.saveToRedis();
+    String redis(@RequestParam(name = "mode", defaultValue = "single") String mode) {
+//        switch (mode) {
+//            case "single":
+//                return employeeService.saveToRedis();
+//            case "pipeline":
+//                return employeeService.saveToRedis();
+//            default:
+//                return "invalid mode";
+//        }
+        return employeeService.saveToRedis(mode);
+        //return employeeService.saveToRedis();
     }
 
     @GetMapping("/emp/{id}")
