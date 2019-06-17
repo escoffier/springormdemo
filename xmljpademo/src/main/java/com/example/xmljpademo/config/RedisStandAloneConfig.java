@@ -18,7 +18,7 @@ import java.time.Duration;
 public class RedisStandAloneConfig extends RedisConfig<String, Object>{
     @Bean
     public JedisConnectionFactory redisStandAloneConnectionFactory() {
-        RedisStandaloneConfiguration standaloneConfiguration = new RedisStandaloneConfiguration("192.168.21.248", 6379);
+        RedisStandaloneConfiguration standaloneConfiguration = new RedisStandaloneConfiguration("192.168.1.215", 6379);
         //JedisConnectionFactory.MutableJedisClientConfiguration
 //        JedisPoolConfig poolConfig = new JedisPoolConfig();
 //        poolConfig.setMaxTotal(20);

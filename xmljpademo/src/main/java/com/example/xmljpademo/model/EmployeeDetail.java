@@ -38,11 +38,11 @@ public class EmployeeDetail implements Serializable {
     @JoinColumn(name = "emp_no")
     private List<Title> titles;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "emp_no")
     private List<Salary> salaries;
 
-    @OneToMany(mappedBy = "employee")
+    @OneToMany(mappedBy = "employee", fetch = FetchType.LAZY)
     private List<Phone> phones;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")

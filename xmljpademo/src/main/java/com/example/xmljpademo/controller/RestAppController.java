@@ -7,6 +7,7 @@ import com.example.xmljpademo.model.post.Post;
 import com.example.xmljpademo.model.post.PostComment;
 import com.example.xmljpademo.service.EmployeeService;
 import com.example.xmljpademo.service.PostsService;
+import com.example.xmljpademo.service.PropagationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +20,16 @@ public class RestAppController {
 
     private static final Logger logger = LoggerFactory.getLogger(RestAppController.class);
     @Autowired
-    EmployeeService employeeService;
+    private EmployeeService employeeService;
 
     @Autowired
-    PostsService postsService;
+    private PostsService postsService;
+
+    @Autowired
+    PropagationService propagationService;
 
     @GetMapping("/redis")
-    String redis(@RequestParam(name = "mode", defaultValue = "single") String mode) {
+    public String redis(@RequestParam(name = "mode", defaultValue = "single") String mode) {
 //        switch (mode) {
 //            case "single":
 //                return employeeService.saveToRedis();
@@ -38,24 +42,37 @@ public class RestAppController {
         //return employeeService.saveToRedis();
     }
 
+    @PostMapping("/propagation")
+    public Employee getEmpPropagation(@RequestBody  Employee employee) {
+        return propagationService.insertEmp(employee);
+    }
     @GetMapping("/emp/{id}")
-    Employee getEmp(@PathVariable("id") Long id) {
+    public Employee getEmp(@PathVariable("id") Long id) {
         return employeeService.getEmployeeCached1(id);
     }
 
     @GetMapping("/employees/{id}")
-    Employee getEmployee(@PathVariable("id") Long id) {
+    public Employee getEmployee(@PathVariable("id") Long id) {
         return employeeService.getEmployee(id);
     }
 
-    @PostMapping("/emp")
-    Employee insertEmp(@RequestBody Employee employee) {
-        return employeeService.inserEmp(employee);
-
+    @PostMapping("/phone")
+    public Phone addPhone(@RequestBody Phone phone) {
+        return employeeService.insertPhone(phone);
     }
 
+    @GetMapping("/phone/{id}")
+    public List<Phone> getPhone(@PathVariable("id") Long id) {
+        return employeeService.getPhones(id);
+    }
+
+    @PostMapping("/emp")
+    public Employee insertEmp(@RequestBody Employee employee) {
+        return employeeService.insertEmp(employee);
+
+    }
     @GetMapping("/employeesdetail/{id}")
-    EmployeeDetail getEmployeeDetail(@PathVariable("id") Long id) {
+    public EmployeeDetail getEmployeeDetail(@PathVariable("id") Long id) {
         EmployeeDetail detail = employeeService.getEmpDetail(id);
         List<DeptEmployee> deptEmployeeList = detail.getDeptEmployees();
         deptEmployeeList.stream().forEach(d -> {
@@ -65,34 +82,33 @@ public class RestAppController {
     }
 
     @GetMapping("/empdetail/{id}")
-    EmployeeDetail getEmpDetail(@PathVariable("id") Long id) {
+    public EmployeeDetail getEmpDetail(@PathVariable("id") Long id) {
         EmployeeDetail employeeDetail = employeeService.getEmployeeDetail(id);
-
         return employeeDetail;
     }
     @GetMapping("/posts/{id}")
-    Post getPost(@PathVariable("id") Long id) {
+    public Post getPost(@PathVariable("id") Long id) {
         return postsService.getPost(id);
     }
 
     @PostMapping("/posts")
-    PostComment addPost(@RequestBody PostCommentDTO commentDTO) {
+    public PostComment addPost(@RequestBody PostCommentDTO commentDTO) {
         return postsService.addPostComment(commentDTO);
     }
 
     @GetMapping("/deptemployee/{id}")
-    DeptEmployee getDeptEmployee(@PathVariable("id") Long id) {
+    public DeptEmployee getDeptEmployee(@PathVariable("id") Long id) {
         return employeeService.getDeptEmp(id);
     }
 
     @GetMapping("/deptManager/{id}")
-    DeptManager getDeptManager(@PathVariable("id") Long id) {
+    public DeptManager getDeptManager(@PathVariable("id") Long id) {
         DeptManager manager = employeeService.getDeptManager(new EmployeeNO(id, "d001"));
         return manager;
     }
 
     @PostMapping("/deptManager")
-    DeptManagerDto addDeptManager(@RequestBody DeptManagerDto deptManagerDto) {
+    public DeptManagerDto addDeptManager(@RequestBody DeptManagerDto deptManagerDto) {
         employeeService.addDeptManager(deptManagerDto);
         return deptManagerDto;
     }

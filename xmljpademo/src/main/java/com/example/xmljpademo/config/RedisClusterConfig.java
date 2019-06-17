@@ -16,7 +16,7 @@ import java.util.List;
 
 @Configuration
 @Profile("redis-cluster")
-public class RedisClusterConfig {
+public class RedisClusterConfig extends RedisConfig<String, Object>{
 
     @Bean
     public JedisConnectionFactory redisConnectionFactory() {
@@ -42,15 +42,17 @@ public class RedisClusterConfig {
 
     @Bean("redisTemplate")
     public RedisTemplate<String, Object> redisTemplate() {
-        RedisTemplate<String, Object> template = new RedisTemplate<>();
+        RedisTemplate<String, Object> template = getRedisTemplate();
         template.setConnectionFactory(redisConnectionFactory());
-
-        Jackson2JsonRedisSerializer<Object> jsonRedisSerializer = new Jackson2JsonRedisSerializer<Object>(Object.class);
-        template.setKeySerializer(new StringRedisSerializer());
-        template.setHashKeySerializer(new StringRedisSerializer());
-
-        template.setValueSerializer(jsonRedisSerializer);
-        template.setHashKeySerializer(jsonRedisSerializer);
+//        RedisTemplate<String, Object> template = new RedisTemplate<>();
+//        template.setConnectionFactory(redisConnectionFactory());
+//
+//        Jackson2JsonRedisSerializer<Object> jsonRedisSerializer = new Jackson2JsonRedisSerializer<Object>(Object.class);
+//        template.setKeySerializer(new StringRedisSerializer());
+//        template.setHashKeySerializer(new StringRedisSerializer());
+//
+//        template.setValueSerializer(jsonRedisSerializer);
+//        template.setHashKeySerializer(jsonRedisSerializer);
         return template;
     }
 }

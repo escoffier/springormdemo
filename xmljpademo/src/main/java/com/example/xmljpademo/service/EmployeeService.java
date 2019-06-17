@@ -51,7 +51,6 @@ public class EmployeeService {
         return "begin merge data to redis";
     }
     public Employee getEmployeeCached(Long id) {
-
         String key = "em:" + id;
         Employee employee = redisSevice.getEmployee(key);
         if (employee != null) {
@@ -144,10 +143,18 @@ public class EmployeeService {
         return deptManager1;
     }
 
+    //@Transactional(value = "employeesTransactionManager", propagation = Propagation.REQUIRED)
+    public Employee insertEmp(Employee employee) {
+        Employee emp = employeeRepository.save(employee);
+//        List<Phone> phones = getPhones(employee.getEmployeeNo());
+//        logger.info(phones.toString());
+        return emp;
+    }
+
     @Transactional(value = "employeesTransactionManager", propagation = Propagation.REQUIRED)
-    public Employee inserEmp(Employee employee) {
-        List<Phone> phones = getPhones(employee.getEmployeeNo());
-        logger.info(phones.toString());
-        return employeeRepository.save(employee);
+    public Phone insertPhone(Phone phone) {
+//        List<Phone> phones = getPhones(employee.getEmployeeNo());
+////        logger.info(phones.toString());
+        return phoneRepository.save(phone);
     }
 }
