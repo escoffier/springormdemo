@@ -7,12 +7,15 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="springormdemo" />
-        <module name="xmljpademo" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="xmljpademo" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="springormdemo" options="-parameters" />
       <module name="xmljpademo" options="-parameters" />
     </option>
   </component>
